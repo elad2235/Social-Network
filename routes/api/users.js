@@ -4,10 +4,12 @@ const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 // @route   POST api/user
 // @desc    Register user
-// access   Public
+//@ts-ignore access   Public
 router.post('/',[
     check('name','Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
@@ -43,8 +45,20 @@ router.post('/',[
         user.password = await bcrypt.hash(password,salt);
         await user.save();
 
-        // Return Json web token
-        res.send('User registerd');
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+        jwt.sign(payload,config.get("jwtSecret"),{
+            expiresIn: 360000
+        }, (err, token) => {
+            if(err) {
+                throw(err);
+            }
+            res.json({ token });
+        });
+
     } catch(e) {
         console.error(e);
         res.status(500).send('Server error');
