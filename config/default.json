@@ -1,4 +1,6 @@
 {
-    "mongoURI": "mongodb+srv://admin123:admin123@devconnector.kzqbx.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "jwtSecret": "redShirt"
+  "mongoURI": "mongodb+srv://admin123:admin123@devconnector.kzqbx.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "redShirt",
+  "githubClientId": "a9be5c766300739f5fb9",
+  "githubSecret": "b3735a3b414929405a3cc6ab6fff9e617c1badd6"
 }
